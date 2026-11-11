@@ -36,6 +36,9 @@ sudo pacman -S --needed --noconfirm \
     wl-clipboard cliphist \
     pipewire pipewire-pulse wireplumber \
     polkit-gnome \
+    keepassxc \
+    obisidan \
+    code \
     bluez bluez-utils \
     wine \
     ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji \
