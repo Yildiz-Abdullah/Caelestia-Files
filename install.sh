@@ -5,8 +5,6 @@
 set -euo pipefail
 
 # --- Einstellungen -----------------------------------------------------------
-# Dein GitHub-Repo mit den Dotfiles (hypr/, fish/, micro/, caelestia/shell.json).
-# Leer lassen = Fallback auf ~/.local/state/caelestia/dots (falls vorhanden).
 DOTFILES_REPO="https://github.com/Yildiz-Abdullah/Caelestia-Files.git"
 # iCloud-Ordner, die synchronisiert werden (lokal: ~/Archiv/Persönliches/<Name>)
 ICLOUD_FOLDERS=(Obsidian KeePass)
@@ -161,7 +159,9 @@ fi
 RCLONE_REMOTE="icloud"
 REMOTE="${RCLONE_REMOTE}:${NAME}"
 LOCAL="$HOME/Archiv/Persönliches/${NAME}"
-RCLONE_LCK="$HOME/.cache/rclone/bisync/icloud_${NAME}..home_${USER}_Archiv_Persönliches_${NAME}.lck"
+LOCAL_KEY="${LOCAL#/}"
+LOCAL_KEY="${LOCAL_KEY//\//_}"
+RCLONE_LCK="$HOME/.cache/rclone/bisync/icloud_${NAME}..${LOCAL_KEY}.lck"
 RUNDIR="${XDG_RUNTIME_DIR:-/tmp}"
 AUTH_FLAG="$RUNDIR/icloud-needs-reauth"
 REAUTH_LOCK="$RUNDIR/icloud-reauth.lock"
@@ -299,16 +299,16 @@ chmod +x ~/.local/bin/icloud-sync.sh
 bash -n ~/.local/bin/icloud-sync.sh
 
 # --- systemd-Units (Templates) -----------------------------------------------
-cat > ~/.config/systemd/user/icloud-sync@.service <<'EOF'
+cat > ~/.config/systemd/user/icloud-sync@.service <<'UNIT_EOF'
 [Unit]
 Description=iCloud sync for %i
 
 [Service]
 Type=oneshot
 ExecStart=%h/.local/bin/icloud-sync.sh %i
-EOF
+UNIT_EOF
 
-cat > ~/.config/systemd/user/icloud-sync@.timer <<'EOF'
+cat > ~/.config/systemd/user/icloud-sync@.timer <<'UNIT_EOF'
 [Unit]
 Description=Periodic iCloud sync for %i
 
@@ -318,7 +318,7 @@ OnUnitActiveSec=10min
 
 [Install]
 WantedBy=timers.target
-EOF
+UNIT_EOF
 
 systemctl --user daemon-reload || true
 
