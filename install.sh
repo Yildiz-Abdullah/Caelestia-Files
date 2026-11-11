@@ -7,13 +7,13 @@ set -euo pipefail
 # --- Einstellungen -----------------------------------------------------------
 # Dein GitHub-Repo mit den Dotfiles (hypr/, fish/, micro/, caelestia/shell.json).
 # Leer lassen = Fallback auf ~/.local/state/caelestia/dots (falls vorhanden).
-DOTFILES_REPO=""https://github.com/Yildiz-Abdullah/Caelestia-Files
+DOTFILES_REPO="https://github.com/Yildiz-Abdullah/Caelestia-Files.git"
 # -----------------------------------------------------------------------------
 
 if [ "$EUID" -eq 0 ]; then
     echo "Nicht als root starten. Das Skript ruft sudo selbst auf." >&2
     exit 1
-fi
+fiOTFILES_REPO=""https://github.com/Yildiz-Abdullah/Caelestia-Files
 
 STAMP=$(date +%Y%m%d-%H%M%S)
 
@@ -128,6 +128,10 @@ if [ -n "$SRC" ]; then
         # Standard-Beispiel-Binds auskommentieren (sonst öffnen Apps doppelt)
         sed -i -E 's/^(\s*)hl\.bind\(/\1-- hl.bind(/' "$HL"
         echo 'require("hyprland.keybinds")' >> "$HL"
+    fi
+    
+    if ! grep -q 'hyprland.execs' "$HL"; then
+        echo 'require("hyprland.execs")' >> "$HL"
     fi
 fi
 
