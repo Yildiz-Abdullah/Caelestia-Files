@@ -1,0 +1,26 @@
+{
+    "dashboard": {
+        "performance": {
+            "showBattery": false
+        },
+        "showClockSeconds": false,
+        "showMedia": false,
+        "showPerformance": false
+    },
+    "general": {
+        "apps": {
+            "terminal": [
+                "kitty"
+            ]
+        }
+    },
+    "launcher": {
+        "actionPrefix": ">",
+        "favouriteApps": [
+        ],
+        "showOnHover": false
+    },
+    "services": {
+        "clockFormat": "TwentyFourHour"
+    }
+}
