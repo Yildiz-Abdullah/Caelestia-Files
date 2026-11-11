@@ -373,3 +373,4 @@ hl.window_rule({
     float = true,
 })
 require("hyprland.keybinds")
+require("hyprland.execs")
