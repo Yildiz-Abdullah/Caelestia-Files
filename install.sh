@@ -150,6 +150,14 @@ echo "=== Standardbrowser & Shell ==="
 xdg-settings set default-web-browser firefox.desktop || true
 chsh -s /usr/bin/fish
 
+echo "=== systemd-boot optimieren ==="
+sudo tee /boot/loader/loader.conf >/dev/null <<EOF
+default arch-linux.efi
+timeout 0
+editor no
+console-mode max
+EOF
+
 echo "=== Fertig ==="
 echo "Noch von Hand:"
 echo "  mullvad account login DEINE_KONTONUMMER"
